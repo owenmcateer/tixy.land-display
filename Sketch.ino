@@ -6,7 +6,7 @@ const uint8_t kMatrixHeight = 15;
 #define LED_PIN     D4
 #define COLOR_ORDER GRB
 #define CHIPSET     WS2812B
-#define BRIGHTNESS  24
+#define BRIGHTNESS  64
 const bool kMatrixSerpentineLayout = true;
 
 // Matrix setup
@@ -27,6 +27,7 @@ CRGB* const leds( leds_plus_safety_pixel + 1);
 unsigned long previousMillis = 0;
 int animation = 0;
 int fps = 0;
+int animationDelay = 12000;
 
 
 /**
@@ -39,11 +40,7 @@ void setup() {
 
   FastLED.addLeds<CHIPSET, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalSMD5050);
   FastLED.setBrightness( BRIGHTNESS );
-
-  // Set status LED
   FastLED.clear();
-  leds[0] = CRGB::Green;
-  FastLED.show();
 }
 
 
@@ -64,7 +61,7 @@ void loop() {
   // FPS reporting
   fps++;
   unsigned long currentMillis = milli;
-  if (currentMillis - previousMillis >= 4000) {
+  if (currentMillis - previousMillis >= animationDelay) {
     animation++;
     previousMillis = currentMillis;
     Serial.print(fps / 3);
@@ -140,6 +137,14 @@ float code(double t, double i, double x, double y) {
 
     case 2:
       return atan(x-(t*sin(t/7.5)))+sin(y/2);
+      break;
+
+    case 25:
+      return sin(i/5+(t));
+      break;
+
+    case 26:
+      return abs(sin(t))*32>x+y;
       break;
 
 
@@ -252,11 +257,6 @@ float code(double t, double i, double x, double y) {
     case 21:
       // Rays
       return sin(atan2(x,y)*5+t*5);
-      break;
-
-    case 22:
-      // Blood Drip https://twitter.com/P_Malin/status/1323602381242834945
-      return y+=2*(fmod(x*x*x,2.3))-t*8,y>0?0:y;
       break;
 
     case 23:
