@@ -139,11 +139,11 @@ float code(double t, double i, double x, double y) {
       return atan(x-(t*sin(t/7.5)))+sin(y/2);
       break;
 
-    case 25:
+    case 24:
       return sin(i/5+(t));
       break;
 
-    case 26:
+    case 25:
       return abs(sin(t))*32>x+y;
       break;
 
@@ -259,12 +259,12 @@ float code(double t, double i, double x, double y) {
       return sin(atan2(x,y)*5+t*5);
       break;
 
-    case 23:
+    case 22:
       // Starfield https://twitter.com/P_Malin/status/1323702220320313346
       return !((int)(x+t*50/(fmod(y*y,5.9)+1))&15)/(fmod(y*y,5.9)+1);
       break;
 
-    case 24:
+    case 23:
       // Hungry Pacman https://twitter.com/aemkei/status/1325185870173974530
       return hypot(x-=t*5,y-=8)<6&(x<y|y<-x);
       break;
