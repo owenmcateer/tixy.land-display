@@ -269,6 +269,12 @@ float code(double t, double i, double x, double y) {
       return hypot(x-=t*5,y-=8)<6&(x<y|y<-x);
       break;
 
+    case 26:
+      // Henry https://github.com/henmel
+      float a,b,c;
+      return a=3-fabs(fmod(t,6)-3),b=fmod(t,2)-1,c=3-hypot(x-4*a-1.5,y-10*b*b-3),c<0?0.2:c*(((int)x^(int)y)&1?-1:1);
+      break;
+
     default:
       animation = 0;
       break;
